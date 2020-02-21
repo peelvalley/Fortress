@@ -1,0 +1,15 @@
+{
+    "name": "peelvalley/fortress",
+    "description": "A Custom Fortress Implementation for the Userfrosting Framework",
+    "type": "library",
+    "require": {
+        "userfrosting/fortress": "^4.3"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "phillmac",
+            "email": "phillmac@users.noreply.github.com"
+        }
+    ]
+}
