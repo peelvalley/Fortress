@@ -11,5 +11,10 @@
             "name": "phillmac",
             "email": "phillmac@users.noreply.github.com"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "PeelValley\\Fortress": "src/"
+        }
+    }
 }
