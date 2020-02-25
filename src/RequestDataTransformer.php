@@ -23,6 +23,8 @@ class RequestDataTransformer extends CoreRequestDataTransformer
                     case 'parse_json': $transformedValue = json_decode($transformedValue); break;
                     case 'integer': $transformedValue = intval($transformedValue); break;
                     case 'boolean': $transformedValue = $this->booleanValue($transformedValue); break;
+                    case 'date': $transformedValue = Carbon::createFromFormat('d F Y', $transformedValue); break;
+                    case 'datetime': $transformedValue = Carbon::createFromFormat('d F Y h:i A', $transformedValue); break;
                     default: $transformedValue = parent::transformField($name, $value);
                 }
             }
