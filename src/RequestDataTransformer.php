@@ -8,6 +8,9 @@ class RequestDataTransformer extends CoreRequestDataTransformer
 {
     public function transformField($name, $value)
     {
+        if(\UserFrosting\Sprinkle\Core\Facades\Config::get('debug.fortress.transformer')) {
+            $this->debug("Field name: $name Value: $value");
+        }
         $schemaFields = $this->schema->all();
 
         $fieldParameters = $schemaFields[$name];
