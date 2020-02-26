@@ -48,6 +48,7 @@ class RequestDataTransformer extends CoreRequestDataTransformer
         } catch (\Exception $e) {
             $example = Carbon::now()->format($dtFormat);
             $this->debug("Format: '{$dtFormat}' value: '{$value}' example: '{$example}'");
+            $this->debug('createFromFormat:' . Carbon::createFromFormat('d M Y H:i', '14 Feb 2020 16:02'));
             throw $e;
         }
     }
