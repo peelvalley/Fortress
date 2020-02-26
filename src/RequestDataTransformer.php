@@ -36,7 +36,7 @@ class RequestDataTransformer extends CoreRequestDataTransformer
     protected function toCarbon($value, $dtFormat) {
         try {
            return Carbon::createFromFormat($dtForat, $transformedValue);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $example = Carbon::now()->format($dtFormat);
             $this->debug("Format: {$dtFormat} value: {$value} example: {$example}");
             throw $e;
