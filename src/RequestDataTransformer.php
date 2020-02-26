@@ -9,7 +9,9 @@ class RequestDataTransformer extends CoreRequestDataTransformer
 {
     public function transformField($name, $value)
     {
-        if(\UserFrosting\Sprinkle\Core\Facades\Config::get('debug.fortress.transformer') == 1) {
+        $debug = \UserFrosting\Sprinkle\Core\Facades\Config::get('debug.fortress.transformer');
+
+        if($debug) {
             $this->debug("Field name: $name Value: $value");
         }
         $schemaFields = $this->schema->all();
@@ -31,6 +33,9 @@ class RequestDataTransformer extends CoreRequestDataTransformer
                     case 'datetime': $transformedValue = $this->toCarbon($transformedValue, 'd M Y H:i'); break;
                     case 'from_timestamp': $transformedValue = Carbon::createFromTimestamp($transformedValue); break;
                     default: $transformedValue = parent::transformField($name, $value);
+                }
+                if($debug) {
+                    $this->debug("Transformaation: $transformation Result: $transformedValue");
                 }
             }
             return $transformedValue;
