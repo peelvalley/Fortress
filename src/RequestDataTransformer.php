@@ -25,6 +25,9 @@ class RequestDataTransformer extends CoreRequestDataTransformer
             $transformedValue = $value;
 
             foreach ($fieldParameters['transformations'] as $transformation) {
+                if($debug) {
+                    $this->debug("Transformation: $transformation Before: $transformedValue");
+                }
                 switch (strtolower($transformation)) {
                     case 'parse_json': $transformedValue = json_decode($transformedValue); break;
                     case 'integer': $transformedValue = intval($transformedValue); break;
@@ -35,7 +38,7 @@ class RequestDataTransformer extends CoreRequestDataTransformer
                     default: $transformedValue = parent::transformField($name, $value);
                 }
                 if($debug) {
-                    $this->debug("Transformaation: $transformation Result: $transformedValue");
+                    $this->debug("Transformation: $transformation Result: $transformedValue");
                 }
             }
             return $transformedValue;
