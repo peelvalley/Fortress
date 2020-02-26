@@ -47,7 +47,7 @@ class RequestDataTransformer extends CoreRequestDataTransformer
 
     protected function toCarbon($dtFormat, $value) {
         try {
-           return Carbon::createFromFormat($dtForat, $value);
+           return Carbon::createFromFormat($dtFormat, $value);
         } catch (\Exception $e) {
             $example = Carbon::now()->format($dtFormat);
             $this->debug("Format: '{$dtFormat}' value: '{$value}' example: '{$example}'");
@@ -56,7 +56,7 @@ class RequestDataTransformer extends CoreRequestDataTransformer
                 'FormatEqual' => $dtFormat === 'd M Y H:i'
             ], TRUE));
 
-            $this->debug('createFromFormat:' . Carbon::createFromFormat('d M Y H:i', $value));
+            $this->debug('createFromFormat:' . Carbon::createFromFormat($dtFormat, $value));
             throw $e;
         }
     }
