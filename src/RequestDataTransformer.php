@@ -3,6 +3,7 @@
 namespace PeelValley\Fortress;
 
 use  UserFrosting\Fortress\RequestDataTransformer as CoreRequestDataTransformer;
+use  UserFrosting\Sprinkle\Core\Facades\Debug;
 
 class RequestDataTransformer extends CoreRequestDataTransformer
 {
@@ -23,13 +24,23 @@ class RequestDataTransformer extends CoreRequestDataTransformer
                     case 'parse_json': $transformedValue = json_decode($transformedValue); break;
                     case 'integer': $transformedValue = intval($transformedValue); break;
                     case 'boolean': $transformedValue = $this->booleanValue($transformedValue); break;
-                    case 'date': $transformedValue = Carbon::createFromFormat('d F Y', $transformedValue); break;
-                    case 'datetime': $transformedValue = Carbon::createFromFormat('d F Y H:i', $transformedValue); break;
+                    case 'date': $transformedValue = $this->toCarbon($transformedValue, 'd M Y'); break;
+                    case 'datetime': $transformedValue = $this->toCarbon($transformedValue, 'd M Y H:i'); break;
                     case 'from_timestamp': $transformedValue = Carbon::createFromTimestamp($transformedValue); break;
                     default: $transformedValue = parent::transformField($name, $value);
                 }
             }
             return $transformedValue;
+        }
+    }
+
+    protected function toCarbon($value, $dtFormat) {
+        try {
+           return Carbon::createFromFormat($dtForat, $transformedValue);
+        } catch (Exception $e) {
+            $example = Carbon::now()->format($dtFormat);
+            Debug::debug("Format: {$dtFormat} value: {$value} example: {$example}");
+            throw $e;
         }
     }
 
