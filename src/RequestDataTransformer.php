@@ -2,13 +2,14 @@
 
 namespace PeelValley\Fortress;
 
+use Carbon\Carbon;
 use  UserFrosting\Fortress\RequestDataTransformer as CoreRequestDataTransformer;
 
 class RequestDataTransformer extends CoreRequestDataTransformer
 {
     public function transformField($name, $value)
     {
-        if(\UserFrosting\Sprinkle\Core\Facades\Config::get('debug.fortress.transformer')) {
+        if(\UserFrosting\Sprinkle\Core\Facades\Config::get('debug.fortress.transformer') == 1) {
             $this->debug("Field name: $name Value: $value");
         }
         $schemaFields = $this->schema->all();
