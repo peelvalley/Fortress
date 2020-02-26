@@ -25,6 +25,7 @@ class RequestDataTransformer extends CoreRequestDataTransformer
                     case 'boolean': $transformedValue = $this->booleanValue($transformedValue); break;
                     case 'date': $transformedValue = Carbon::createFromFormat('d F Y', $transformedValue); break;
                     case 'datetime': $transformedValue = Carbon::createFromFormat('d F Y H:i', $transformedValue); break;
+                    case 'from_timestamp': $transformedValue = Carbon::createFromTimestamp($transformedValue); break;
                     default: $transformedValue = parent::transformField($name, $value);
                 }
             }
