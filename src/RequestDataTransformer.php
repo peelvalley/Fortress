@@ -49,6 +49,7 @@ class RequestDataTransformer extends CoreRequestDataTransformer
         try {
            return Carbon::createFromFormat($dtFormat, $value);
         } catch (\Exception $e) {
+            $this->debug('1');
             $example = Carbon::now()->format($dtFormat);
             $this->debug("Format: '{$dtFormat}' value: '{$value}' example: '{$example}'");
             $this->debug(print_r([
