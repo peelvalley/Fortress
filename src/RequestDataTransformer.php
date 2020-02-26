@@ -53,7 +53,7 @@ class RequestDataTransformer extends CoreRequestDataTransformer
                 'FormatEqual' => $dtFormat === 'd M Y H:i'
             ], TRUE));
 
-            $this->debug('createFromFormat:' . Carbon::createFromFormat('d M Y H:i', '14 Feb 2020 16:02'));
+            $this->debug('createFromFormat:' . Carbon::createFromFormat('d M Y H:i', $value));
             throw $e;
         }
     }
