@@ -29,7 +29,7 @@ class RequestDataTransformer extends CoreRequestDataTransformer
                     case 'parse_json': $transformedValue = json_decode($transformedValue); break;
                     case 'integer': $transformedValue = intval($transformedValue); break;
                     case 'boolean': $transformedValue = $this->booleanValue($transformedValue); break;
-                    case 'date': $transformedValue = $this->toCarbon( 'd M Y', $transformedValue); break;
+                    case 'date': $transformedValue = $this->toCarbon('d M Y', $transformedValue); break;
                     case 'datetime': $transformedValue = $this->toCarbon('d M Y H:i', $transformedValue); break;
                     case 'from_timestamp': $transformedValue = Carbon::createFromTimestamp($transformedValue); break;
                     default: $transformedValue = parent::transformField($name, $value);
@@ -47,7 +47,7 @@ class RequestDataTransformer extends CoreRequestDataTransformer
            return Carbon::createFromFormat($dtForat, $value);
         } catch (\Exception $e) {
             $example = Carbon::now()->format($dtFormat);
-            $this->debug("Format: {$dtFormat} value: {$value} example: {$example}");
+            $this->debug("Format: '{$dtFormat}' value: '{$value}' example: '{$example}'");
             throw $e;
         }
     }
