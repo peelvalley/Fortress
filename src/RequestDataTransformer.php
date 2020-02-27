@@ -31,7 +31,7 @@ class RequestDataTransformer extends CoreRequestDataTransformer
                     Debug::debug("Transformation: $transformation Before: $transformedValue");
                 }
                 switch (strtolower($transformation)) {
-                    case 'parse_json': $transformedValue = json_decode($transformedValue); break;
+                    case 'parse_json': if(is_string($transformedValue)) $transformedValue = json_decode($transformedValue); break;
                     case 'integer': $transformedValue = intval($transformedValue); break;
                     case 'boolean': $transformedValue = $this->booleanValue($transformedValue); break;
                     case 'date': $transformedValue = $this->toCarbon('d M Y', $transformedValue); break;
