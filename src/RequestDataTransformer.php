@@ -4,6 +4,8 @@ namespace PeelValley\Fortress;
 
 use Carbon\Carbon;
 use  UserFrosting\Fortress\RequestDataTransformer as CoreRequestDataTransformer;
+use \UserFrosting\Sprinkle\Core\Facades\Debug;
+
 
 class RequestDataTransformer extends CoreRequestDataTransformer
 {
@@ -50,13 +52,9 @@ class RequestDataTransformer extends CoreRequestDataTransformer
            return Carbon::createFromFormat($dtFormat, $value);
         } catch (\Exception $e) {
             $example = Carbon::now()->format($dtFormat);
-            $this->debug("Format: '{$dtFormat}' value: '{$value}' example: '{$example}'");
+            Debug::debug("Format: '{$dtFormat}' value: '{$value}' example: '{$example}'");
             throw $e;
         }
-    }
-
-    protected function debug($message) {
-        (\UserFrosting\System\Facade::getFacadeContainer())->debugLogger->debug($message); // Nasty workaround because userfrosting debug facade seems broken
     }
 
     protected function booleanValue ($value) {
