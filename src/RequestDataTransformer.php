@@ -28,7 +28,7 @@ class RequestDataTransformer extends CoreRequestDataTransformer
 
             foreach ($fieldParameters['transformations'] as $transformation) {
                 if($debug) {
-                    Debug::debug("Transformation: $transformation Before: " . json_encode($transformedValue));
+                    Debug::debug("Transformation: $transformation Before: " . print_r($transformedValue, TRUE));
                 }
                 switch (strtolower($transformation)) {
                     case 'parse_json': if(is_string($transformedValue)) $transformedValue = json_decode($transformedValue); break;
@@ -40,7 +40,7 @@ class RequestDataTransformer extends CoreRequestDataTransformer
                     default: $transformedValue = parent::transformField($name, $value);
                 }
                 if($debug) {
-                    Debug::debug("Transformation: $transformation Result: " . json_encode($transformedValue));
+                    Debug::debug("Transformation: $transformation Result: " . print_r($transformedValue, TRUE));
                 }
             }
             return $transformedValue;
