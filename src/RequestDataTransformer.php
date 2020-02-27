@@ -14,7 +14,7 @@ class RequestDataTransformer extends CoreRequestDataTransformer
         $debug = \UserFrosting\Sprinkle\Core\Facades\Config::get('debug.fortress.transformer');
 
         if($debug) {
-            $this->debug("Field name: $name Value: $value");
+            Debug::debug("Field name: $name Value: $value");
         }
         $schemaFields = $this->schema->all();
 
@@ -28,7 +28,7 @@ class RequestDataTransformer extends CoreRequestDataTransformer
 
             foreach ($fieldParameters['transformations'] as $transformation) {
                 if($debug) {
-                    $this->debug("Transformation: $transformation Before: $transformedValue");
+                    Debug::debug("Transformation: $transformation Before: $transformedValue");
                 }
                 switch (strtolower($transformation)) {
                     case 'parse_json': $transformedValue = json_decode($transformedValue); break;
@@ -40,7 +40,7 @@ class RequestDataTransformer extends CoreRequestDataTransformer
                     default: $transformedValue = parent::transformField($name, $value);
                 }
                 if($debug) {
-                    $this->debug("Transformation: $transformation Result: $transformedValue");
+                    Debug::debug("Transformation: $transformation Result: $transformedValue");
                 }
             }
             return $transformedValue;
