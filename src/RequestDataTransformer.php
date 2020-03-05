@@ -37,7 +37,7 @@ class RequestDataTransformer extends CoreRequestDataTransformer
                     case 'date': $transformedValue = $this->toCarbon('d M Y', $transformedValue); break;
                     case 'datetime': $transformedValue = $this->toCarbon('d M Y H:i', $transformedValue); break;
                     case 'from_timestamp': $transformedValue = Carbon::createFromTimestamp($transformedValue); break;
-                    case 'to_null': $transformedValue = isNullValue($transformedValue)? NULL: $transformedValue; break;
+                    case 'to_null': $transformedValue = $this->isNullValue($transformedValue)? NULL: $transformedValue; break;
 
                     default: $transformedValue = parent::transformField($name, $value);
                 }
