@@ -30,6 +30,11 @@ class ServerSideValidator extends CoreServerSideValidator
                 if (isset($validator['values'])) {
                     $this->customRuleWithMessage('arrayValues', $messageSet, $fieldName, $validator['values']);
                 }
+            },
+            'array_value_type' => function ($validator, $messageSet, $fieldName) {
+                if (isset($validator['type']) && is_callable($validator['type'])) {
+                    $this->customRuleWithMessage('arrayValuesType', $messageSet, $fieldName, $validator['type']);
+                }
             }
         ];
     }
@@ -47,6 +52,26 @@ class ServerSideValidator extends CoreServerSideValidator
     {
         foreach ($value as $arrayKey=>$arrayVal) {
             if (! in_array($arrayVal, $params[0])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Validate that an array field contains only values of a specific type
+     *
+     * @param string $field
+     * @param mixed  $value
+     * @param array  $params
+     *
+     * @return bool
+     */
+    protected function validateArrayValuesType($field, $value, $params)
+    {
+        $typeCheck =  $params[0];
+        foreach ($value as $arrayKey=>$arrayVal) {
+            if (! call_user_func($typeCheck, $arrayVal)) {
                 return false;
             }
         }
