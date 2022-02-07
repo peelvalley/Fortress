@@ -3,7 +3,6 @@
     "description": "A Custom Fortress Implementation for the Userfrosting Framework",
     "type": "library",
     "require": {
-        "userfrosting/fortress": "^4.5"
     },
     "license": "MIT",
     "authors": [
