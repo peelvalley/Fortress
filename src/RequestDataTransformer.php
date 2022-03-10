@@ -31,17 +31,18 @@ class RequestDataTransformer extends CoreRequestDataTransformer
                     Debug::debug("Transformation: $transformation Before: " . print_r($transformedValue, TRUE));
                 }
                 switch (strtolower($transformation)) {
-                    case 'parse_json': if(is_string($transformedValue)) $transformedValue = json_decode($transformedValue); break;
-                    case 'integer': $transformedValue = intval($transformedValue); break;
-                    case 'boolean': $transformedValue = $this->booleanValue($transformedValue); break;
-                    case 'date': $transformedValue = $this->toCarbon('d M Y', $transformedValue); break;
-                    case 'datetime': $transformedValue = $this->toCarbon('d M Y H:i', $transformedValue); break;
-                    case 'from_timestamp': $transformedValue = Carbon::createFromTimestamp($transformedValue); break;
-                    case 'to_null': $transformedValue = $this->isNullValue($transformedValue)? NULL: $transformedValue; break;
-                    case 'lowercase': $transformedValue = strtolower($transformedValue); break;
-                    case 'uppercase': $transformedValue = strtoupper($transformedValue); break;
+                    case 'parse_json':      if(is_string($transformedValue)) $transformedValue = json_decode($transformedValue); break;
+                    case 'integer':         $transformedValue = intval($transformedValue); break;
+                    case 'boolean':         $transformedValue = $this->booleanValue($transformedValue); break;
+                    case 'date':            $transformedValue = $this->toCarbon('d M Y', $transformedValue); break;
+                    case 'datetime':        $transformedValue = $this->toCarbon('d M Y H:i', $transformedValue); break;
+                    case 'from_timestamp':  $transformedValue = Carbon::createFromTimestamp($transformedValue); break;
+                    case 'to_null':         $transformedValue = $this->isNullValue($transformedValue)? NULL: $transformedValue; break;
+                    case 'lowercase':       $transformedValue = strtolower($transformedValue); break;
+                    case 'uppercase':       $transformedValue = strtoupper($transformedValue); break;
+                    case 'remove_spaces':   $transformedValue = str_replace(' ', '', $transformedValue); break;
 
-                    default: $transformedValue = parent::transformField($name, $value);
+                    default:                $transformedValue = parent::transformField($name, $value);
                 }
                 if($debug) {
                     Debug::debug("Transformation: $transformation Result: " . print_r($transformedValue, TRUE));
