@@ -45,7 +45,7 @@ class ServerSideValidator extends CoreServerSideValidator
     }
 
     /**
-     * Validate that an array field contains only specific values
+     * Validate that an array field contains only specific keys
      *
      * @param string $field
      * @param mixed  $value
@@ -56,7 +56,7 @@ class ServerSideValidator extends CoreServerSideValidator
     protected function validateArrayKeys($field, $value, $params)
     {
         foreach ($value as $arrayKey=>$arrayVal) {
-            if (! in_array($arrayKey, $params[0])) {
+            if (! in_array($arrayKey, $params)) {
                 return false;
             }
         }
