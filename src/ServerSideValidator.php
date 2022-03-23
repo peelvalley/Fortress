@@ -26,6 +26,11 @@ class ServerSideValidator extends CoreServerSideValidator
     {
 
         return [
+            'array_keys' => function ($validator, $messageSet, $fieldName) {
+                if (isset($validator['keys'])) {
+                    $this->customRuleWithMessage('arrayKeys', $messageSet, $fieldName, $validator['keys']);
+                }
+            },
             'array_values' => function ($validator, $messageSet, $fieldName) {
                 if (isset($validator['values'])) {
                     $this->customRuleWithMessage('arrayValues', $messageSet, $fieldName, $validator['values']);
@@ -38,6 +43,26 @@ class ServerSideValidator extends CoreServerSideValidator
             }
         ];
     }
+
+    /**
+     * Validate that an array field contains only specific values
+     *
+     * @param string $field
+     * @param mixed  $value
+     * @param array  $params
+     *
+     * @return bool
+     */
+    protected function validateArrayKeys($field, $value, $params)
+    {
+        foreach ($value as $arrayKey=>$arrayVal) {
+            if (! in_array($arrayKey, $params[0])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     /**
      * Validate that an array field contains only specific values
