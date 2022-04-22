@@ -31,6 +31,11 @@ class ServerSideValidator extends CoreServerSideValidator
                     $this->customRuleWithMessage('arrayKeys', $messageSet, $fieldName, $validator['keys']);
                 }
             },
+            'nested_array_keys' => function ($validator, $messageSet, $fieldName) {
+                if (isset($validator['keys'])) {
+                    $this->customRuleWithMessage('nestedArrayKeys', $messageSet, $fieldName, $validator['keys']);
+                }
+            },
             'array_values' => function ($validator, $messageSet, $fieldName) {
                 if (isset($validator['values'])) {
                     $this->customRuleWithMessage('arrayValues', $messageSet, $fieldName, $validator['values']);
@@ -63,6 +68,27 @@ class ServerSideValidator extends CoreServerSideValidator
         return true;
     }
 
+    /**
+     * Validate that an array field contains only specific keys
+     *
+     * @param string $field
+     * @param mixed  $value
+     * @param array  $params
+     *
+     * @return bool
+     */
+    protected function validateNestedArrayKeys($field, $value, $params)
+    {
+        foreach ($value as $arrayItem) {
+            foreach ($arrayItem as $arrayKey=>$arrayVal) {
+                if (! in_array($arrayKey, $params)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 
     /**
      * Validate that an array field contains only specific values
@@ -82,6 +108,7 @@ class ServerSideValidator extends CoreServerSideValidator
         }
         return true;
     }
+
 
     /**
      * Validate that an array field contains only values of a specific type
