@@ -35,8 +35,22 @@ class RequestDataTransformer extends CoreRequestDataTransformer
                     case 'parse_json_assoc':    if(is_string($transformedValue)) $transformedValue = json_decode($transformedValue, TRUE); break;
                     case 'integer':             $transformedValue = intval($transformedValue); break;
                     case 'boolean':             $transformedValue = $this->booleanValue($transformedValue); break;
-                    case 'date':                $transformedValue = $this->toCarbon($fieldParameters['dateFormat'] ?? 'd M Y', $transformedValue); break;
-                    case 'datetime':            $transformedValue = $this->toCarbon($fieldParameters['dateTimeFormat'] ?? 'd M Y H:i', $transformedValue); break;
+                    case 'date':
+                        if(isset($fieldParameters['allowEmpty'])) {
+                            $transformedValue = $this->toCarbon($fieldParameters['dateFormat'] ?? 'd M Y', $transformedValue, $fieldParameters['allowEmpty']);
+                            break;
+                        }
+
+                        $transformedValue = $this->toCarbon($fieldParameters['dateFormat'] ?? 'd M Y', $transformedValue);
+                        break;
+                    case 'datetime':
+                        if(isset($fieldParameters['allowEmpty'])) {
+                            $transformedValue = $this->toCarbon($fieldParameters['dateTimeFormat'] ?? 'd M Y H:i', $transformedValue, $fieldParameters['allowEmpty']);
+                            break;
+                        }
+
+                        $transformedValue = $this->toCarbon($fieldParameters['dateTimeFormat'] ?? 'd M Y H:i', $transformedValue);
+                        break;
                     case 'from_timestamp':      $transformedValue = Carbon::createFromTimestamp($transformedValue); break;
                     case 'to_null':             $transformedValue = $this->isNullValue($transformedValue)? NULL: $transformedValue; break;
                     case 'lowercase':           $transformedValue = strtolower($transformedValue); break;
@@ -53,7 +67,11 @@ class RequestDataTransformer extends CoreRequestDataTransformer
         }
     }
 
-    protected function toCarbon($dtFormat, $value) {
+    protected function toCarbon($dtFormat, $value, $allowEmpty = False) {
+        if($allowEmpty && (is_null($value) || $value === "")) {
+            return Null;
+        }
+
         try {
            return Carbon::createFromFormat($dtFormat, $value);
         } catch (\Exception $e) {
