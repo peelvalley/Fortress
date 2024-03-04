@@ -10,10 +10,10 @@ class ServerSideValidator extends CoreServerSideValidator
      /**
      * {@inheritdoc}
      */
-    public function validate(array $data = [])
+    public function validate(array $data = [], (MessageTranslator $translator)
     {
 
-        $this->generateCustomSchemaRules();   // Build custom validator rules from the schema.
+        $this->generateCustomSchemaRules($translator);   // Build custom validator rules from the schema.
         return parent::validate();      // Validate!
     }
 
@@ -148,9 +148,9 @@ class ServerSideValidator extends CoreServerSideValidator
     /**
      * Generate and add rules from the schema.
      */
-    private function generateCustomSchemaRules()
+    private function generateCustomSchemaRules(MessageTranslator $translator)
     {
-        $customRules = $this->getCustomSchemaRules();
+        $customRules = $this->getCustomSchemaRules($translator);
 
         foreach ($this->schema->all() as $fieldName => $field) {
             if (!isset($field['validators'])) {
