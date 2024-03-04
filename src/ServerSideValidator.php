@@ -10,7 +10,7 @@ class ServerSideValidator extends CoreServerSideValidator
      /**
      * {@inheritdoc}
      */
-    public function validate(array $data = [], (MessageTranslator $translator)
+    public function validate(array $data = [], MessageTranslator $translator)
     {
 
         $this->generateCustomSchemaRules($translator);   // Build custom validator rules from the schema.
