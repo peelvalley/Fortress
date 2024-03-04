@@ -2,7 +2,7 @@
 
 namespace PeelValley\Fortress;
 
-use \UserFrosting\Fortress\ServerSideValidator as CoreServerSideValidator;
+use UserFrosting\Fortress\ServerSideValidator as CoreServerSideValidator;
 
 class ServerSideValidator extends CoreServerSideValidator
 {
