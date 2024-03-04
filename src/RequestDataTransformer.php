@@ -3,8 +3,8 @@
 namespace PeelValley\Fortress;
 
 use Carbon\Carbon;
-use  UserFrosting\Fortress\RequestDataTransformer as CoreRequestDataTransformer;
-use \UserFrosting\Sprinkle\Core\Facades\Debug;
+use UserFrosting\Fortress\RequestDataTransformer as CoreRequestDataTransformer;
+use UserFrosting\Sprinkle\Core\Facades\Debug;
 
 
 class RequestDataTransformer extends CoreRequestDataTransformer
