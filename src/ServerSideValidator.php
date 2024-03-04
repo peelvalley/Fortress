@@ -10,24 +10,25 @@ class ServerSideValidator extends CoreServerSideValidator
      /**
      * {@inheritdoc}
      */
-    public function validate(array $data = [], MessageTranslator $translator)
+    public function validate(array $data = [])
     {
 
-        $this->generateCustomSchemaRules($translator);   // Build custom validator rules from the schema.
-        return parent::validate();      // Validate!
+
+        $this->generateCustomSchemaRules();   // Build custom validator rules from the schema.
+        return parent::validate($data);      // Validate!
     }
 
 
     /**
      * Get the custom set of available rules, can be overridden to provide additional rules if required
      */
-    protected function getCustomSchemaRules(MessageTranslator $translator)
+    protected function getCustomSchemaRules()
     {
 
         return [
             'array_keys' => function ($validator, $messageSet, $fieldName) {
                 if (isset($validator['keys'])) {
-                    $this->customRuleWithMessage('arrayKeys', $messageSet, $fieldName, $validator['keys']);
+                    $this->RuleWithMessage('arrayKeys', $messageSet, $fieldName, $validator['keys']);
                 }
             },
             'nested_array_keys' => function ($validator, $messageSet, $fieldName) {
@@ -148,9 +149,9 @@ class ServerSideValidator extends CoreServerSideValidator
     /**
      * Generate and add rules from the schema.
      */
-    private function generateCustomSchemaRules(MessageTranslator $translator)
+    private function generateCustomSchemaRules()
     {
-        $customRules = $this->getCustomSchemaRules($translator);
+        $customRules = $this->getCustomSchemaRules();
 
         foreach ($this->schema->all() as $fieldName => $field) {
             if (!isset($field['validators'])) {
