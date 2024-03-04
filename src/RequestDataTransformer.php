@@ -56,6 +56,7 @@ class RequestDataTransformer extends CoreRequestDataTransformer
                     case 'lowercase':           $transformedValue = strtolower($transformedValue); break;
                     case 'uppercase':           $transformedValue = strtoupper($transformedValue); break;
                     case 'remove_spaces':       $transformedValue = str_replace(' ', '', $transformedValue); break;
+                    case 'array_push':          array_push($transformedValue, $fieldParameters['pushValue'] ); break;
 
                     default:                    $transformedValue = parent::transformField($name, $value);
                 }
@@ -98,7 +99,7 @@ class RequestDataTransformer extends CoreRequestDataTransformer
 
     protected function isNullValue ($value) {
         if ($value === NULL) return TRUE;
-        if ($value === "") return TRUE;
+        if ($value === '') return TRUE;
         if ($value === -1) return TRUE;
     }
 }
