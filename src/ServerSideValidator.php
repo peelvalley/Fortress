@@ -1,6 +1,5 @@
 <?php
 
-
 namespace PeelValley\Fortress;
 
 use  UserFrosting\Fortress\ServerSideValidator as CoreServerSideValidator;
