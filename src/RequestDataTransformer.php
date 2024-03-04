@@ -56,7 +56,7 @@ class RequestDataTransformer extends CoreRequestDataTransformer
                     case 'lowercase':           $transformedValue = strtolower($transformedValue); break;
                     case 'uppercase':           $transformedValue = strtoupper($transformedValue); break;
                     case 'remove_spaces':       $transformedValue = str_replace(' ', '', $transformedValue); break;
-                    case 'array_push':          $transformedValue[] =  $fieldParameters['pushValue']; break;
+                    case 'array_push':          $transformedValue = $this->arrayPush($transformedValue, $fieldParameters['pushValue']); break;
 
                     default:                    $transformedValue = parent::transformField($name, $value);
                 }
@@ -101,5 +101,16 @@ class RequestDataTransformer extends CoreRequestDataTransformer
         if ($value === NULL) return TRUE;
         if ($value === '') return TRUE;
         if ($value === -1) return TRUE;
+    }
+
+    protected function arrayPush($arr, $push) {
+        Debug::debug(var_export($arr, TRUE));
+        Debug::debug(var_export($push, TRUE));
+
+        array_push($arr, $push);
+
+        Debug::debug(var_export($arr, TRUE));
+        
+        return $arr;
     }
 }
